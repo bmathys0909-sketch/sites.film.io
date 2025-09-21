@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="quiz.css">
+
+      <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #e50914;
+    }
+    .quiz-section {
+      margin: 20px 0;
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+    }
+    button {
+      background-color: #e50914;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 1.2em;
+      color: #ffd700;
+    }
+  </style>
+</head>
+<body>
+    <h1>QUIZ</h1>
+     <h2 id="#h2">Bienvenue sur la page quiz sur laquelle tu vas pouvoir découvrir a quelle film peut correspondre t'on humeur 😉</h2>
+
+<h1>🎬 Quiz CinéMatch</h1>
+
+  <div class="quiz-section">
+    <h2>1. Quelle est ton humeur ?</h2>
+    <label><input type="radio" name="mood" value="joyeux"> Joyeux</label>
+    <label><input type="radio" name="mood" value="triste"> Triste</label>
+    <label><input type="radio" name="mood" value="motivé"> Motivé</label>
+    <label><input type="radio" name="mood" value="nostalgique"> Nostalgique</label>
+  </div>
+
+  <div class="quiz-section">
+    <h2>2. Combien de temps as-tu ?</h2>
+    <label><input type="radio" name="time" value="30"> 30 min</label>
+    <label><input type="radio" name="time" value="60"> 1 heure</label>
+    <label><input type="radio" name="time" value="120"> 2 heures ou plus</label>
+  </div>
+
+  <div class="quiz-section">
+    <h2>3. Quel genre préfères-tu ?</h2>
+    <label><input type="radio" name="genre" value="comédie"> Comédie</label>
+    <label><input type="radio" name="genre" value="thriller"> Thriller</label>
+    <label><input type="radio" name="genre" value="romance"> Romance</label>
+    <label><input type="radio" name="genre" value="science-fiction"> Science-fiction</label>
+  </div>
+
+  <button onclick="showResult()">Voir le résultat</button>
+
+  <div id="result"></div>
+<script>
+const filmSuggestions = {
+  joyeux: {
+    "30": {
+      "comédie": [
+        "Brooklyn Nine-Nine (épisode)", "Modern Family (épisode)", "The Office (épisode)",
+        "Parks and Recreation (épisode)", "How I Met Your Mother (épisode)"
+      ],
+      "science-fiction": [
+        "Love, Death & Robots (épisode)", "Rick & Morty (épisode)", "Star Trek: Short Treks",
+        "Doctor Who (épisode)", "The Orville (épisode)"
+      ],
+      "romance": [
+        "Heartstopper (épisode)", "Dash & Lily (épisode)", "Emily in Paris (épisode)",
+        "Jane the Virgin (épisode)", "Crazy Ex-Girlfriend (épisode)"
+      ],
+      "thriller": [
+        "Inside No. 9 (épisode)", "Black Mirror (épisode)", "Lupin (épisode)",
+        "Sherlock (épisode)", "You (épisode)"
+      ]
+    },
+    "60": {
+      "comédie": [
+        "Yes Man", "The Mask", "Chef", "School of Rock", "Little Miss Sunshine"
+      ],
+      "science-fiction": [
+        "Timecrimes", "I Am Mother", "Edge of Tomorrow", "Oblivion", "Source Code"
+      ],
+      "romance": [
+        "About Time", "Love, Rosie", "Begin Again", "The Secret Life of Walter Mitty", "Notting Hill"
+      ],
+      "thriller": [
+        "Run", "Searching", "Limitless", "The Accountant", "Now You See Me"
+      ]
+    },
+    "120": {
+      "comédie": [
+        "The Grand Budapest Hotel", "Jojo Rabbit", "Catch Me If You Can", "The Wolf of Wall Street", "The Intouchables"
+      ],
+      "science-fiction": [
+        "Guardians of the Galaxy", "Ready Player One", "Inception", "Tenet", "Interstellar"
+      ],
+      "romance": [
+        "La La Land", "Crazy Rich Asians", "A Star Is Born", "Titanic", "Call Me by Your Name"
+      ],
+      "thriller": [
+        "Knives Out", "Gone Girl", "Shutter Island", "Prisoners", "The Girl on the Train"
+      ]
+    }
+  }
+  // Tu peux ajouter les autres humeurs ici (triste, motivé, nostalgique)
+};
+
+function showResult() {
+  const moodInput = document.querySelector('input[name="mood"]:checked');
+  const timeInput = document.querySelector('input[name="time"]:checked');
+  const genreInput = document.querySelector('input[name="genre"]:checked');
+
+  if (!moodInput || !timeInput || !genreInput) {
+    document.getElementById('result').innerText = "Merci de répondre à toutes les questions !";
+    return;
+  }
+
+  const mood = moodInput.value;
+  const time = timeInput.value;
+  const genre = genreInput.value;
+
+  const films = filmSuggestions[mood]?.[time]?.[genre];
+
+  if (films && films.length > 0) {
+    const list = films.map(film => `• ${film}`).join("\n");
+    document.getElementById('result').innerText = `🎥 Voici des suggestions pour toi :\n${list}`;
+  } else {
+    document.getElementById('result').innerText = "Désolé, aucune suggestion trouvée pour cette combinaison.";
+  }
+}
+</script>
+    
+</body>
+</html>
